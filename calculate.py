@@ -12,13 +12,13 @@ plt_count = 0
 gamma = 1.4
 g = 9.8
 tmin = 0
-tmax = 100
+tmax = 200
 
 # Problem inputs
 
 # a / a* -> ex / crit
-critical_area = 0.05
-a_ratio = 7
+critical_area = 0.04
+a_ratio = 9
 exit_area = critical_area * a_ratio
 
 stagnation_pressure = 7e6
