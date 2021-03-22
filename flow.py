@@ -32,6 +32,7 @@ def get_isen_pressure_ratio(mach: float, gamma: float = 1.4) -> float:
 
 def what_is_happening_in_my_nozzle(exit_area, critical_area, stagnation_pressure, ambient_pressure):
     design_mach = get_exit_mach(exit_area, critical_area)
+    # print(f'design_mach: {design_mach}')
     isen_exit_pressure = get_isen_pressure_ratio(design_mach) * stagnation_pressure
 
     print(f'Pamb is: {ambient_pressure}, Pexit isen is: {isen_exit_pressure}')

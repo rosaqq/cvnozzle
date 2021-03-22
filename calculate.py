@@ -17,8 +17,8 @@ tmax = 100
 # Problem inputs
 
 # a / a* -> ex / crit
-critical_area = 0.1
-a_ratio = 10
+critical_area = 0.05
+a_ratio = 7
 exit_area = critical_area * a_ratio
 
 stagnation_pressure = 7e6
@@ -137,11 +137,11 @@ for t in x:
 
     prev_ts = t
 
-plot(accel_data, 'accel')
-plot(vel_data, 'vel')
+#plot(accel_data, 'accel')
+#plot(vel_data, 'vel')
 plot(height_data, 'height')
 arr = np.pad(pressure_ratio_data, (0, 100 - len(pressure_ratio_data)), constant_values=0)
-plot(arr, 'pb/pc')
+#plot(arr, 'pb/pc')
 arr2 = np.pad(thrust_data, (0, 100 - len(thrust_data)), constant_values=0)
 plot(arr2, 'thrust')
 plt.show()
