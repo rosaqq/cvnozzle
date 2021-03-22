@@ -7,8 +7,8 @@ air_gas_constant = 287.05
 def get_exit_mach(area, area_star):
     """
     Applies fsolve to area_ratio to try and get exit_mach
+    Only returns supersonic mach
     :return: Mach number at the nozzle exhaust plane
-    # todo: only supersonic mach being used here
     """
     return gd.mach_from_area_ratio(area / area_star)[-1]
 
@@ -81,7 +81,8 @@ def get_v_exit(exit_area, critical_area, stagnation_temperature, stagnation_pres
         return exit_velocity
 
     # over expanded oblique waves at exit
-    elif ambient_pressure > isen_exit_pressure:
+    #  happens when ambient_pressure > isen_exit_pressure
+    else:
         print('nozzle is overX')
         # But just how overX is my flow??
 
