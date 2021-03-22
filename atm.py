@@ -29,7 +29,7 @@ def get_ambient_pressure(height: float) -> float:
     p_ref = [101325.0, 22632.1, 5474.89, 868.02, 110.91, 66.94, 3.96]
     # Reference temperature values for each layer
     t_ref = [288.15, 216.65, 216.65, 228.65, 270.65, 270.65, 214.65]
-    # Reference lapser rate values for each layer
+    # Reference lapse rate values for each layer
     l_ref = [-0.0065, 0, 0.001, 0.0028, 0, -0.0028, -0.002]
 
     # The values used for m_ref, g_zero, and r_star are in accordance with the U.S. Standard Atmosphere, 1976,

@@ -23,7 +23,7 @@ exit_area = critical_area * a_ratio
 
 stagnation_pressure = 7e6
 stagnation_temperature = 2500
-initial_mass = 5000
+initial_mass = 10000
 
 # atmospheric formulas
 sea_level_pressure = 101325  # Pa -> N/m^2
@@ -73,8 +73,7 @@ def thrust(height):
 
     ambient_pressure = get_ambient_pressure(height)
 
-    t_exit = stagnation_temperature / (1 + (gamma - 1) / 2 * exit_mach ** 2)
-    v_exit = exit_mach * np.sqrt(gamma * const.R * t_exit)
+    v_exit = get_v_exit(exit_area, critical_area, stagnation_temperature, stagnation_pressure, ambient_pressure, gamma)
 
     pressure_ratio_data.append(ambient_pressure / stagnation_pressure)
 
@@ -89,7 +88,7 @@ def get_accel(height, vel, mass):
     dg = drag(height, vel)
     m = mass
 
-    #print(f'thrust: {th}, drag: {dg}, mass: {m}')
+    # print(f'thrust: {th}, drag: {dg}, mass: {m}')
     return (th - dg) / m - g
 
 
@@ -116,7 +115,7 @@ for t in x:
     if current_height >= 0:
         # accel instant
         accel = get_accel(current_height, current_velocity, current_mass)
-        #print(accel)
+        # print(accel)
         dv = accel * (t - prev_ts)
         current_velocity += dv
     else:
@@ -133,15 +132,13 @@ for t in x:
     height_data.append(current_height)
     # print(f' height_data: {height_data}, curr_height: {current_height}')
 
-    what_is_happening_in_my_nozzle(exit_area, critical_area, stagnation_pressure, get_ambient_pressure(current_height))
-
     prev_ts = t
 
-#plot(accel_data, 'accel')
-#plot(vel_data, 'vel')
+# plot(accel_data, 'accel')
+# plot(vel_data, 'vel')
 plot(height_data, 'height')
 arr = np.pad(pressure_ratio_data, (0, 100 - len(pressure_ratio_data)), constant_values=0)
-#plot(arr, 'pb/pc')
+# plot(arr, 'pb/pc')
 arr2 = np.pad(thrust_data, (0, 100 - len(thrust_data)), constant_values=0)
 plot(arr2, 'thrust')
 plt.show()
