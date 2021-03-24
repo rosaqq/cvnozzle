@@ -1,5 +1,6 @@
 import matplotlib
 import matplotlib.pyplot as plt
+import sys
 
 from atm import *
 from flow import *
@@ -15,13 +16,13 @@ tmax = 200
 # Problem inputs
 
 # a / a* -> ex / crit
-critical_area = 0.04
-a_ratio = 9
+critical_area = float(sys.argv[1])
+a_ratio = float(sys.argv[2])
 exit_area = critical_area * a_ratio
 
 stagnation_pressure = 7e6
 stagnation_temperature = 2500
-initial_mass = 10000
+initial_mass = float(sys.argv[3])
 
 # atmospheric formulas
 sea_level_pressure = 101325  # Pa -> N/m^2
@@ -144,4 +145,5 @@ for t in x:
 # plot(arr2, 'thrust')
 # plt.show()
 
-print(f'top height: {top_height}, reached at t = {x[height_data.index(top_height)]}')
+# print(f'top height: {top_height}, reached at t = {x[height_data.index(top_height)]}')
+print(f'{top_height}, {x[height_data.index(top_height)]}')
