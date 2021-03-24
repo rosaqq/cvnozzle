@@ -59,10 +59,11 @@ def normal_shock_p_ratio(mach: float, gamma: float = 1.4) -> float:
 def get_v_exit(exit_area, critical_area, stagnation_temperature, stagnation_pressure,
                ambient_pressure, gamma) -> float:
     design_mach = get_exit_mach(exit_area, critical_area)
+    # todo: print only when pattern changes
     # print(f'design_mach: {design_mach}')
     isen_exit_pressure = get_isen_pressure_ratio(design_mach) * stagnation_pressure
 
-    print(f'Pamb is: {ambient_pressure}, Pexit isen is: {isen_exit_pressure}')
+    #print(f'Pamb is: {ambient_pressure}, Pexit isen is: {isen_exit_pressure}')
 
     # Basically, flow will be isentropic inside nozzle from underX to overX with shock at exit
     # Isentropic -> design Mach at exit, isen temp eqs., velocity etc, check nasa slides
@@ -71,9 +72,11 @@ def get_v_exit(exit_area, critical_area, stagnation_temperature, stagnation_pres
     # under expanded nozzle, expansion waves at exit
     if ambient_pressure <= isen_exit_pressure:
         if ambient_pressure == isen_exit_pressure:
-            print('Design condition!')
+            #print('Design condition!')
+            pass
         else:
-            print('nozzle is underX')
+            #print('nozzle is underX')
+            pass
 
         exit_temp = get_isen_temp_ratio(design_mach) * stagnation_temperature
         exit_velocity = design_mach * np.sqrt(gamma * air_gas_constant * exit_temp)
@@ -83,17 +86,19 @@ def get_v_exit(exit_area, critical_area, stagnation_temperature, stagnation_pres
     # over expanded oblique waves at exit
     #  happens when ambient_pressure > isen_exit_pressure
     else:
-        print('nozzle is overX')
+        #print('nozzle is overX')
         # But just how overX is my flow??
 
         # if ambient pressure >>> isen exit pressure normal shock waves will form inside nozzle
         pressure_at_shock = isen_exit_pressure * normal_shock_p_ratio(design_mach)
         if ambient_pressure <= pressure_at_shock:
             if ambient_pressure == pressure_at_shock:
-                print('Shock at exit!')
+                #print('Shock at exit!')
+                pass
             else:
                 # shock is pushed outwards
-                print('Oblique shock after exit!')
+                #print('Oblique shock after exit!')
+                pass
             # Anyway, we got isentropic flow till nozzle exit
             exit_temp = get_isen_temp_ratio(design_mach) * stagnation_temperature
             exit_velocity = design_mach * np.sqrt(gamma * air_gas_constant * exit_temp)

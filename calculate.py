@@ -1,7 +1,5 @@
-import gas_dynamics as gd
 import matplotlib
 import matplotlib.pyplot as plt
-import scipy.constants as const
 
 from atm import *
 from flow import *
@@ -42,7 +40,7 @@ def plot(data, label):
 # #######################
 
 
-# ------ Rocket Functions
+# ------ Rocket Functions # todo: rocket class
 # ----------------------------------------------------------------------------------------------------------------------
 def mass_flux(time):
     # m_flow is constant for a specified nozzle geometry
@@ -99,6 +97,7 @@ current_height = 0
 accel_data = []
 vel_data = []
 height_data = []
+top_height = 0
 
 pressure_ratio_data = []
 thrust_data = []
@@ -130,15 +129,19 @@ for t in x:
     vel_data.append(current_velocity)
     # print(f' vel_data: {vel_data}, curr_vel: {curr_velocity}')
     height_data.append(current_height)
+    if current_height > top_height:
+        top_height = current_height
     # print(f' height_data: {height_data}, curr_height: {current_height}')
 
     prev_ts = t
 
 # plot(accel_data, 'accel')
 # plot(vel_data, 'vel')
-plot(height_data, 'height')
-arr = np.pad(pressure_ratio_data, (0, 100 - len(pressure_ratio_data)), constant_values=0)
+# plot(height_data, 'height')
+# arr = np.pad(pressure_ratio_data, (0, 100 - len(pressure_ratio_data)), constant_values=0)
 # plot(arr, 'pb/pc')
-arr2 = np.pad(thrust_data, (0, 100 - len(thrust_data)), constant_values=0)
-plot(arr2, 'thrust')
-plt.show()
+# arr2 = np.pad(thrust_data, (0, 100 - len(thrust_data)), constant_values=0)
+# plot(arr2, 'thrust')
+# plt.show()
+
+print(f'top height: {top_height}, reached at t = {x[height_data.index(top_height)]}')
