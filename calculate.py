@@ -1,6 +1,5 @@
 import matplotlib
 import matplotlib.pyplot as plt
-import sys
 
 from atm import *
 from flow import *
@@ -8,14 +7,17 @@ from flow import *
 plt_count = 0
 
 
-def main(args):
+def main(args=None):
     matplotlib.use('tkagg')
+
+    if args is None:
+        args = ['', 0.1562, 1.3673, 6000]
 
     gamma = 1.4
     g = 9.8
     tmin = 0
     tmax = 200
-    steps = 100
+    steps = 200
 
     # Problem inputs
 
@@ -96,6 +98,7 @@ def main(args):
         th = thrust(height)
         thrust_data.append(th)
         dg = drag(height, vel)
+        dg_data.append(dg)
         m = mass
 
         # print(f'thrust: {th}, drag: {dg}, mass: {m}')
@@ -112,6 +115,7 @@ def main(args):
 
     pressure_ratio_data = []
     thrust_data = []
+    dg_data = []
 
     prev_ts = 0
 
@@ -128,18 +132,18 @@ def main(args):
         dv = accel * (t - prev_ts)
         current_velocity += dv
 
-        if current_velocity < 0:
-            # print('starting to fall, stopping simulation')
-            top_height = current_height
-            break
+        # if current_velocity < 0:
+        #     # print('starting to fall, stopping simulation')
+        #     top_height = current_height
+        #     break
 
         dh = current_velocity * (t - prev_ts)
         current_height += dh
 
-        # if current_height < 0:
-        #     current_height = 0
-        #     accel = 0
-        #     current_velocity = 0
+        if current_height < 0:
+            current_height = 0
+            accel = 0
+            current_velocity = 0
 
         accel_data.append(accel)
         # print(f'accel_data: {accel_data}, curr_accel: {accel}')
@@ -148,6 +152,9 @@ def main(args):
         height_data.append(current_height)
         # print(f' height_data: {height_data}, curr_height: {current_height}')
 
+        if current_height > top_height:
+            top_height = current_height
+
         prev_ts = t
 
     # plot(fill_zeros(accel_data), 'accel')
@@ -155,11 +162,12 @@ def main(args):
     # plot(fill_zeros(height_data), 'height')
     # plot(fill_zeros(thrust_data), 'thrust')
 
-    # plot(accel_data, 'accel')
-    # plot(vel_data, 'vel')
-    # plot(height_data, 'height')
-    # plot(thrust_data, 'thrust')
-    # plt.show()
+    plot(accel_data, 'accel')
+    plot(vel_data, 'vel')
+    plot(height_data, 'height')
+    plot(thrust_data, 'thrust')
+    plot(dg_data, 'drag')
+    plt.show()
 
     # print(f'top height: {top_height}, reached at t = {x[height_data.index(top_height)]}')
     return top_height, x[height_data.index(top_height)]
@@ -167,4 +175,4 @@ def main(args):
 
 if __name__ == '__main__':
     # print(main(sys.argv))
-    print(main(['', 0.1562, 1.3673, 5959.183673469387]))
+    print(main())

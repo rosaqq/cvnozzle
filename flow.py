@@ -63,7 +63,7 @@ def get_v_exit(exit_area, critical_area, stagnation_temperature, stagnation_pres
     # print(f'design_mach: {design_mach}')
     isen_exit_pressure = get_isen_pressure_ratio(design_mach) * stagnation_pressure
 
-    #print(f'Pamb is: {ambient_pressure}, Pexit isen is: {isen_exit_pressure}')
+    # print(f'Pamb is: {ambient_pressure}, Pexit isen is: {isen_exit_pressure}')
 
     # Basically, flow will be isentropic inside nozzle from underX to overX with shock at exit
     # Isentropic -> design Mach at exit, isen temp eqs., velocity etc, check nasa slides
@@ -109,4 +109,4 @@ def get_v_exit(exit_area, critical_area, stagnation_temperature, stagnation_pres
             # Highly over expanded, shockwave inside nozzle
             # So that pressure after shock + divergent pressure increase => ambient_pressure
             print("Shock inside nozzle, don't give me trash nozzles please")
-            return 0
+            return -1
