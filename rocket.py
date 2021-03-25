@@ -31,7 +31,6 @@ class Rocket:
         # m_flow is constant for a specified nozzle geometry
         # m_flow depends on throat_area
         flux = gd.mass_flux_max(self.stagnation_pressure, self.stagnation_temperature) * self.critical_area
-        # kg/m^2
 
         if flux * time >= 0.6 * self.initial_mass:
             return 0
@@ -42,6 +41,7 @@ class Rocket:
         rho = get_ambient_density(height)
         airspeed = np.abs(velocity)
         mach = airspeed / gd.sonic_velocity(temperature=get_ambient_temperature(height))
+
         coef_d = -3e-6 * np.power(mach, 6) + 0.0002 * np.power(mach, 5) - 0.0046 * np.power(mach, 4) + 0.053 * \
             np.power(mach, 3) - 0.2806 * np.power(mach, 2) + 0.6211 * mach + 0.0568
 
@@ -57,8 +57,8 @@ class Rocket:
 
         ambient_pressure = get_ambient_pressure(height)
 
-        v_exit = get_v_exit(self.exit_area, self.critical_area, self.stagnation_temperature, self.stagnation_pressure, ambient_pressure,
-                            gamma)
+        v_exit = get_v_exit(self.exit_area, self.critical_area, self.stagnation_temperature, self.stagnation_pressure,
+                            ambient_pressure, gamma)
         if v_exit < 0:
             print('shock inside, aborting')
             return 0
@@ -77,6 +77,7 @@ class Rocket:
         self.thrust_data.append(th)
         dg = self.drag(height, vel)
         self.drag_data.append(dg)
+
         m = mass
 
         # print(f'thrust: {th}, drag: {dg}, mass: {m}')
@@ -89,14 +90,9 @@ class Rocket:
 
             # accel instant
             self.current_accel = self.get_accel(t, self.current_height, self.current_vel)
-            # print(accel)
+
             dv = self.current_accel * (t - prev_ts)
             self.current_vel += dv
-
-            # if current_velocity < 0:
-            #     # print('starting to fall, stopping simulation')
-            #     top_height = current_height
-            #     break
 
             dh = self.current_vel * (t - prev_ts)
             self.current_height += dh
@@ -107,11 +103,8 @@ class Rocket:
                 self.current_height = 0
 
             self.accel_data.append(self.current_accel)
-            # print(f'accel_data: {accel_data}, curr_accel: {accel}')
             self.vel_data.append(self.current_vel)
-            # print(f' vel_data: {vel_data}, curr_vel: {current_velocity}')
             self.height_data.append(self.current_height)
-            # print(f' height_data: {height_data}, curr_height: {current_height}')
 
             if self.current_height > self.top_height:
                 self.top_height = self.current_height
