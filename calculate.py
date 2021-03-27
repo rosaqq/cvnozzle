@@ -12,7 +12,9 @@ def main(args):
     matplotlib.use('tkagg')
 
     if len(args) < 4:
-        args = ['', 0.1562, 1.3673, 6000]
+        args = ['', 0.1562, 1.3673, 6000, 1]
+
+    show_plots = bool(int(args[4]))
 
     # Problem inputs
     stagnation_pressure = 7e6
@@ -39,12 +41,13 @@ def main(args):
     rocket = Rocket(stagnation_pressure, stagnation_temperature, critical_area, a_ratio, initial_mass)
     rocket.launch(tmin, tmax, steps)
 
-    # plot(rocket.accel_data, 'accel')
-    # plot(rocket.vel_data, 'vel')
-    # plot(rocket.height_data, 'height')
-    # plot(rocket.thrust_data, 'thrust')
-    # plot(rocket.drag_data, 'drag')
-    # plt.show()
+    if show_plots:
+        plot(rocket.accel_data, 'accel')
+        plot(rocket.vel_data, 'vel')
+        plot(rocket.height_data, 'height')
+        plot(rocket.thrust_data, 'thrust')
+        plot(rocket.drag_data, 'drag')
+        plt.show()
 
     return rocket.top_height
 

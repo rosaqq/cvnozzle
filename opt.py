@@ -19,7 +19,7 @@ for m in mass_range:
         ac = round(ac, 4)
         for ar in ar_range:
             ar = round(ar, 4)
-            th = calculate.main(['', ac, ar, m])
+            th = calculate.main(['', ac, ar, m, 0])
             # writer.writerow([m, ac, ar, th, t])
             # print(f'\t\tar: {ar} -> {th, t}')
             if th > best_rocket['h']:
