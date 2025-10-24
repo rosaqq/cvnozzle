@@ -3,9 +3,11 @@ import numpy as np
 import csv
 import sys
 
-mass_range = np.linspace(1000, 10000, 50)
-ac_range = np.linspace(0.005, 0.2, 50)
-ar_range = np.linspace(1, 7, 50)
+# made this runnable in practical time for demo purposes
+# YOU can adjust parameter ranges here if you want
+mass_range = [5000] #np.linspace(1000, 10000, 50)
+ac_range = np.linspace(0.005, 0.2, 20)
+ar_range = np.linspace(1, 7, 20)
 best_rocket = {'h': 0.}
 #
 # with open('data.csv', 'w', newline='') as file:
@@ -28,4 +30,4 @@ for m in mass_range:
                 best_rocket['ac'] = ac
                 best_rocket['ar'] = ar
 
-print(best_rocket)
+print(f'Max h = {best_rocket["h"]}, with m = {best_rocket["m"]}, throat = {best_rocket["ac"]}, ratio = {best_rocket["ar"]}')

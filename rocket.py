@@ -60,8 +60,8 @@ class Rocket:
         v_exit = get_v_exit(self.exit_area, self.critical_area, self.stagnation_temperature, self.stagnation_pressure,
                             ambient_pressure, gamma)
         if v_exit < 0:
-            print('shock inside, aborting')
-            return 0
+            print('Shock inside, aborting')
+            exit()
 
         if mass_flow == 0:
             return 0
